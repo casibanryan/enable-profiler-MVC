@@ -28,6 +28,7 @@ class User {
         const user_exist = await db.fetch_record(query, [user.email_address]);
         
         if(user_exist == undefined && form_validation.valid_form) {
+            this.register_success = true;
             const query = 'INSERT INTO users (first_name, last_name, email_address, password) VALUES (?, ?, ?, ?)';
             const values = [    
                 user.first_name,
