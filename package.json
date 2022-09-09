@@ -1,0 +1,25 @@
+{
+  "name": "login_and_reqistration",
+  "version": "1.0.0",
+  "description": "To build a login application that follows the MVC pattern.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "login",
+    "and",
+    "register"
+  ],
+  "author": "resty ochea",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "mysql": "^2.18.1"
+  }
+}

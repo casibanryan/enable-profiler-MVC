@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript">
+        $(document).ready(() => {
+            const enable_profiler = $('#profiler').val();
+            $('main').html(enable_profiler);
+        });
+    </script>
+</head>
+
+<body class="container my-3 mx-auto w-50">
+
+    <form action="/login_process" method="post" class="mb-5 w-75 ps-5">
+        <h1 class="h2">Login</h1>
+        <p class="alert alert-danger alert-dismissible fade show py-2 mb-1 <%= data.authorize === false ? 'd-block' : 'd-none'%>"
+            role="alert">
+            Something went wrong, Invalid credentials!
+            <button type="button" class="btn-close pt-1" data-bs-dismiss="alert" aria-label="Close"></button>
+        </p>
+        <label class="d-block mb-2">
+            Email Address: <input type="email" name="email_address" class="ms-3 px-5" value="<%= data.email_address %>" required />
+        </label>
+        <label class="d-block mb-2">
+            Password: <input type="password" name="password" class="ms-5 px-5" value="<%= data.password %>" required />
+        </label>
+        <input type="submit" value="Login" class="btn btn-sm btn-light border border-dark float-end me-5">
+    </form>
+    
+    <form action="/register_process" method="post" class="w-75 ps-5">
+        <h1 class="h2">Registration</h1>
+        <p class="alert alert-success alert-dismissible fade show py-2 mb-1 <%= data.register_success ? 'd-block' : 'd-none'%>" role="alert">
+            Register Successfully!
+            <button type="button" class="btn-close pt-1" data-bs-dismiss="alert" aria-label="Close"></button>
+        </p>
+        <label class="d-block mb-2">
+            First Name: <input type="text" name="first_name" class="position-relative px-5" style="left: 60px;"
+               value="<%= !data.register_success ? data.session.first_name : null %>" required />
+        </label>
+        <label class="d-block mb-2">
+            last Name: <input type="text" name="last_name" class="position-relative px-5" style="left: 65px;"
+                value="<%= !data.register_success? data.session.last_name : null %>" required />
+        </label>
+        <label class="d-block mb-2">
+            <p class="alert alert-danger alert-dismissible fade show py-2 mb-1 <%= data.invalid_email ? 'd-block' : 'd-none'%>" role="alert">
+                Email already exist, Please try again!
+                <button type="button" class="btn-close pt-1" data-bs-dismiss="alert" aria-label="Close"></button>
+            </p>
+            Email: <input type="email" name="email_address" class="position-relative px-5" style="left: 97px;"
+                value="<%= !data.register_success ? data.session.email_address : null %>" required />
+        </label>
+        <label class="d-block mb-2">
+            <% const errors = data.error_messages %> 
+            <p class="alert alert-danger alert-dismissible fade show py-2 mb-1 <%= Object.entries(errors).length >= 1 ? 'd-block' : 'd-none'%>" role="alert">
+                <%= errors.password_not_match %> 
+                <button type="button" class="btn-close pt-1" data-bs-dismiss="alert" aria-label="Close"></button>
+            </p>
+            Password: <input type="password" name="password" class="position-relative px-5" style="left: 70px;"
+                value="<%= !data.register_success ? data.session.password : null %>" required />
+        </label>
+        <label class="d-block mb-2">
+            Confirm Password: <input type="password" name="confirm_password" class="ms-2 px-5" required />
+        </label>
+        <input type="submit" value="Register" class="btn btn-sm btn-light border border-dark float-end me-4">
+    </form>
+    
+    <main>
+       <input type="hidden" id="profiler" value="<%= data.enable_profiler %> "/>
+    </main>
+</body>
+
+</html>
