@@ -18,7 +18,7 @@ class Query_Builder {
     run_mysql_query(query, values) {
         const cmd = this.con.query(query, values, (err, result) => {
             if(err) {
-                console.log(`error in inserting user : ${err}`);
+                console.log(err);
             } 
             //return this.queries.includes(cmd.sql) ? null : this.queries.push(cmd.sql);
             this.queries.length == 0 ? this.queries.push([cmd.sql, JSON.stringify(result)]) : null;

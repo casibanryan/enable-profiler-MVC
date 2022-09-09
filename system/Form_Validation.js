@@ -49,4 +49,4 @@ class Form_Validation {
     }
 }
 
-module.exports = Form_Validation;
+module.exports = new Form_Validation();

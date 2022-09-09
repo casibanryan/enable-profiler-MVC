@@ -8,7 +8,6 @@ class Enable_Profiler {
     run(is_true) {
         return (req, res, next) => {
             let output = '';
-            
             if(req.method == 'POST') {
                 this.post = req.body;
             }

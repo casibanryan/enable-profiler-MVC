@@ -1,16 +1,16 @@
 const db = require('../database/Query_Builder');
-const Form_Validation = require('../system/Form_Validation');
+const form_validation = require('../system/Form_Validation');
 const bcrypt = require('bcryptjs');
 
-class User extends Form_Validation {
+class User {
     constructor() {
-        super();
         this.first_name = null;
         this.last_name = null;
         this.email_address = null;
         this.password = null;
         this.authorize = null;
         this.register_success = false;
+        this.error_messages = form_validation.error_messages;
     }
 
     /**
@@ -21,13 +21,13 @@ class User extends Form_Validation {
      * @returns The object itself.
      */
     async insert_new_user(req, user) {
-        this.required(user.first_name);
-        this.matches('Password', user.password, user.confirm_password);
+        form_validation.required(user.first_name);
+        form_validation.matches('Password', user.password, user.confirm_password);
 
         const query = 'SELECT * FROM users WHERE email_address = ?';
         const user_exist = await db.fetch_record(query, [user.email_address]);
         
-        if(user_exist == undefined && this.valid_form) {
+        if(user_exist == undefined && form_validation.valid_form) {
             const query = 'INSERT INTO users (first_name, last_name, email_address, password) VALUES (?, ?, ?, ?)';
             const values = [    
                 user.first_name,
